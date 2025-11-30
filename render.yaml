@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: supivaa-backend
+    env: docker
+    plan: free
+    autoDeploy: true
+    buildCommand: ""
+    startCommand: ""
