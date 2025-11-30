@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('partners', function (Blueprint $table) {
-            // ✅ Add is_logo column to explicitly mark logos
-            $table->boolean('is_logo')->default(false)->after('link');
-        });
+        // ✅ Only add the column if it doesn't already exist
+        if (!Schema::hasColumn('partners', 'is_logo')) {
+            Schema::table('partners', function (Blueprint $table) {
+                $table->boolean('is_logo')->default(false)->after('link');
+            });
+        }
     }
 
     /**
@@ -22,9 +24,11 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('partners', function (Blueprint $table) {
-            // ✅ Drop is_logo column if rolled back
-            $table->dropColumn('is_logo');
-        });
+        // ✅ Only drop the column if it exists
+        if (Schema::hasColumn('partners', 'is_logo')) {
+            Schema::table('partners', function (Blueprint $table) {
+                $table->dropColumn('is_logo');
+            });
+        }
     }
 };
