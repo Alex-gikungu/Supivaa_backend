@@ -40,6 +40,10 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Install dependencies (production only)
 RUN composer install --no-dev --optimize-autoloader
 
+# Fix Apache DocumentRoot to point to Laravel's public directory
+RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf \
+    && sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/apache2.conf
+
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html
