@@ -1,9 +1,11 @@
 # Use official PHP image with Apache
 FROM php:8.2-apache
 
-
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
     libonig-dev \
     libxml2-dev \
     libzip-dev \
@@ -18,8 +20,9 @@ RUN apt-get update && apt-get install -y \
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
-# Install PHP extensions required by Laravel (including Postgres)
-RUN docker-php-ext-install \
+# Configure and install PHP extensions required by Laravel
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install \
     pdo_mysql \
     pdo_pgsql \
     pgsql \
