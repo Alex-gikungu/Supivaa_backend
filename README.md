@@ -65,7 +65,9 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
-# DB_CONNECTION=pgsql
+## DB_CONNECTION=pgsql
+
+
 # DB_HOST=127.0.0.1
 # DB_PORT=5432
 # DB_DATABASE=supivaa_local
