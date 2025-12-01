@@ -47,13 +47,14 @@ RUN composer install --no-dev --optimize-autoloader
 RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf \
     && sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/apache2.conf
 
-# Set permissions
+# Set permissions (critical for Laravel)
 RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html
+    && chmod -R 755 /var/www/html \
+    && chmod -R 775 /var/www/html/storage \
+    && chmod -R 775 /var/www/html/bootstrap/cache
 
 # Expose port
 EXPOSE 80
 
-# ✅ Start Apache only (do not run migrations here)
-# Start Laravel with safe migration + seed logic
-CMD bash -c "php artisan migrate --force || true && php artisan db:seed --force || true && apache2-foreground"
+# Start Laravel with migrations + seed, then Apache
+CMD bash -c "php artisan migrate --force && php artisan db:seed --force && apache2-foreground"
