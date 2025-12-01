@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
             AboutSectionSeeder::class,
             HomeSectionSeeder::class,
             WhatWeDoSectionSeeder::class,
-            FixServeCardsSeeder::class
+            FixServeCardsSeeder::class,
+            UserSeeder::class
         ]);
     }
 }

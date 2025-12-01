@@ -1,15 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\ApproachStepController;
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
+| Here is where you can register web routes for your application.
 |
 */
 
@@ -21,3 +20,8 @@ Route::get('/health', function () {
     return 'OK';
 });
 
+// ✅ Protect admin routes with auth + admin gate
+Route::middleware(['auth', 'can:admin'])->group(function () {
+    Route::get('/admin/approach-steps/{id}/edit', [ApproachStepController::class, 'edit'])
+        ->name('admin.approach-steps.edit');
+});

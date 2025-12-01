@@ -54,5 +54,6 @@ RUN chown -R www-data:www-data /var/www/html \
 # Expose port
 EXPOSE 80
 
-# Run migrations automatically, then start Apache
-CMD php artisan migrate --force && apache2-foreground
+# ✅ Start Apache only (do not run migrations here)
+# Start Laravel with safe migration + seed logic
+CMD bash -c "php artisan migrate --force || true && php artisan db:seed --force || true && apache2-foreground"

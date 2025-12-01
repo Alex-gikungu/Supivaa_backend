@@ -11,5 +11,11 @@ class ApproachStepController extends Controller
     {
         return response()->json(ApproachStep::all());
     }
-}
 
+    // ✅ Added edit method for admin dashboard
+    public function edit($id)
+    {
+        $step = ApproachStep::findOrFail($id);
+        return view('admin.approach-steps.edit', compact('step'));
+    }
+}
